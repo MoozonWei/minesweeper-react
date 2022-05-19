@@ -9,8 +9,6 @@ export default function Board({
   mineNum
 }) {
   const [grid, setGrid] = useState([])
-  const [nonMineCount, setNonMineCount] = useState(boardRow * boardCol - mineNum)
-  // const [revealedCount,]
   function initializeGame() {
     function freshBoard() {
       const { board: newBoard } = createBoard(boardRow, boardCol, mineNum)
@@ -19,6 +17,28 @@ export default function Board({
     freshBoard()
   }
   useEffect(initializeGame, [])
+  useEffect(() => {
+    if (grid) {
+      let count = 0
+      for (let i = 0; i < grid.length; i++) {
+        for (let j = 0; j < grid[0].length; j++) {
+          if (grid[i][j].revealed) count++
+        }
+      }
+      if (count === (boardCol * boardRow - mineNum)) {
+        let newGrid = JSON.parse(JSON.stringify(grid))
+        newGrid = newGrid.map(row => {
+          return row.map(e => {
+            const tmp = e
+            tmp.revealed = true
+            return tmp
+          })
+        })
+        setGrid(newGrid)
+        alert('Win!')
+      }
+    }
+  }, [grid])
 
   const updateFlag = (e, r, c) => {
     // make a deep clone
@@ -41,7 +61,6 @@ export default function Board({
         })
       })
     } else if (newGrid[r][c].value === 0) {
-      console.log(newGrid[r][c])
       newGrid = revealZero(newGrid, r, c)
     } else {
       newGrid[r][c].revealed = true

@@ -5,7 +5,7 @@ import Board from './components/Board'
 function App() {
   const [boardRow, setBoardRow] = useState(15)
   const [boardCol, setBoardCol] = useState(15)
-  const [mineNum, setMineNum] = useState(50)
+  const [mineNum, setMineNum] = useState(30)
   return (
     <div className="App h-screen flex flex-col items-center">
       <h1 className='font-bold text-4xl p-10'>MINESWEEPER</h1>

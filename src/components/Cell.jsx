@@ -1,5 +1,5 @@
 import React from 'react'
-import { disableCache, Icon } from '@iconify/react';
+import { Icon } from '@iconify/react';
 
 export default function Cell({
   details,
