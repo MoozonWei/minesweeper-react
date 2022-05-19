@@ -3,15 +3,22 @@ import createBoard from '../util/createBoard'
 import revealZero from '../util/revealZero'
 import Cell from './Cell'
 
-export default function Board() {
+export default function Board({
+  boardRow,
+  boardCol,
+  mineNum
+}) {
   const [grid, setGrid] = useState([])
-  useEffect(() => {
+  const [nonMineCount, setNonMineCount] = useState(boardRow * boardCol - mineNum)
+  // const [revealedCount,]
+  function initializeGame() {
     function freshBoard() {
-      const { board: newBoard } = createBoard(15, 15, 30)
+      const { board: newBoard } = createBoard(boardRow, boardCol, mineNum)
       setGrid(newBoard)
     }
     freshBoard()
-  }, [])
+  }
+  useEffect(initializeGame, [])
 
   const updateFlag = (e, r, c) => {
     // make a deep clone
@@ -45,11 +52,11 @@ export default function Board() {
   if (!grid) {
     return <div>Loading</div>
   }
-  return <div className="flex-1 flex justify-center items-center gap-1">
+  return <div className="flex-1 flex flex-col justify-center items-center gap-1 p-10">
     {
       grid.map((singleRow, rowNum) => {
         return (
-          <div key={rowNum} className="flex flex-col gap-1">
+          <div key={rowNum} className="flex flex justify-center gap-1">
             {singleRow.map((singleBlock, colNum) => {
               return <Cell
                 key={colNum}
@@ -62,5 +69,14 @@ export default function Board() {
         )
       })
     }
+    <div className='w-full my-4 flex justify-between items-center'>
+      <button
+        className='p-2 bg-green-500 text-white font-bold rounded-lg hover:bg-green-600'
+        onClick={initializeGame}
+      >
+        RESTART
+      </button>
+      {/* <span>TIMER</span> */}
+    </div>
   </div>
 }
