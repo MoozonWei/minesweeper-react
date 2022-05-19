@@ -45,39 +45,44 @@ export default (row, col, bombs) => {
       }
 
       // Top Right
-      if (r > 0 && board[r - 1][c].value === 'X') {
+      if (r > 0 && c < col - 1 && board[r - 1][c + 1].value === 'X') {
         board[r][c].value++
       }
 
       // Right
-      if (r > 0 && board[r - 1][c].value === 'X') {
+      if (c < col - 1 && board[r][c + 1].value === 'X') {
         board[r][c].value++
       }
 
       // Bottom Right
-      if (r > 0 && board[r - 1][c].value === 'X') {
+      if (r < row - 1 && c < col - 1 && board[r + 1][c + 1].value === 'X') {
         board[r][c].value++
       }
 
       // Bottom
-      if (r > 0 && board[r - 1][c].value === 'X') {
+      if (r < row - 1 && board[r + 1][c].value === 'X') {
         board[r][c].value++
       }
 
       // Bottom Left
-      if (r > 0 && board[r - 1][c].value === 'X') {
+      if (r < row - 1 && c > 0 && board[r + 1][c - 1].value === 'X') {
         board[r][c].value++
       }
 
       // Left
-      if (r > 0 && board[r - 1][c].value === 'X') {
+      if (c > 0 && board[r][c - 1].value === 'X') {
         board[r][c].value++
       }
 
       // Top Left
-      if (r > 0 && board[r - 1][c].value === 'X') {
+      if (r > 0 && c > 0 && board[r - 1][c - 1].value === 'X') {
         board[r][c].value++
       }
     }
   }
+  return { board, mineLocation }
+}
+
+function randomNum(min = 0, max) {
+  return Math.floor(Math.random() * (max - min + 1))
 }
